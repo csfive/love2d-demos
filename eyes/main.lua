@@ -19,9 +19,21 @@ local function drawEye(eye)
     local dy = love.mouse.getY() - eye.y
     local d = math.sqrt(dx * dx + dy * dy)
     local followDistance = math.min(d, eye.maxFollowDistance)
+
     local angle = math.atan2(dy, dx)
     local pupilX = eye.x + followDistance * math.cos(angle)
     local pupilY = eye.y + followDistance * math.sin(angle)
+
+    -- 向量归一化
+    -- local pupilX, pupilY
+    -- if d > 0 then
+    --     local unitX = dx / d
+    --     local unitY = dy / d
+    --     pupilX = eye.x + unitX * followDistance
+    --     pupilY = eye.y + unitY * followDistance
+    -- else
+    --     pupilX, pupilY = eye.x, eye.y
+    -- end
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.circle('fill', eye.x, eye.y, eye.radius)
