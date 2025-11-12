@@ -1,21 +1,44 @@
 local love = require 'love'
 
+local function createEye(x, y, radius, pupilRadius)
+    radius = radius or 50
+    pupilRadius = pupilRadius or 15
+
+    return {
+        x = x,
+        y = y,
+        radius = radius,
+        pupilRadius = pupilRadius,
+        -- 限制瞳孔的移动范围
+        maxFollowDistance = radius * 0.6
+    }
+end
+
+local function drawEye(eye)
+    local dx = love.mouse.getX() - eye.x
+    local dy = love.mouse.getY() - eye.y
+    local d = math.sqrt(dx * dx + dy * dy)
+    local followDistance = math.min(d, eye.maxFollowDistance)
+    local angle = math.atan2(dy, dx)
+    local pupilX = eye.x + followDistance * math.cos(angle)
+    local pupilY = eye.y + followDistance * math.sin(angle)
+
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.circle('fill', eye.x, eye.y, eye.radius)
+    love.graphics.setColor(0, 0, .4)
+    love.graphics.circle('fill', pupilX, pupilY, eye.pupilRadius)
+end
+
+local eyes = {}
+
+function love.load()
+    love.window.setTitle('Eyes')
+    table.insert(eyes, createEye(200, 200, 70, 25))
+    table.insert(eyes, createEye(380, 200, 70, 25))
+end
+
 function love.draw()
-    local function drawEye(eyeX, eyeY)
-        local distanceX = love.mouse.getX() - eyeX
-        local distanceY = love.mouse.getY() - eyeY
-        local distance = math.min(math.sqrt(distanceX ^ 2 + distanceY ^ 2), 30)
-        local angle = math.atan2(distanceY, distanceX)
-
-        local pupilX = eyeX + (math.cos(angle) * distance)
-        local pupilY = eyeY + (math.sin(angle) * distance)
-
-        love.graphics.setColor(1, 1, 1)
-        love.graphics.circle('fill', eyeX, eyeY, 50)
-        love.graphics.setColor(0, 0, .4)
-        love.graphics.circle('fill', pupilX, pupilY, 15)
+    for _, eye in ipairs(eyes) do
+        drawEye(eye)
     end
-
-    drawEye(200, 200)
-    drawEye(330, 200)
 end
