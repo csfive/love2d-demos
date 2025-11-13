@@ -1696,7 +1696,7 @@ function init()
     'magnetism', 'insurance', 'dividends', 'haste', 'rearm', 'ceremonial_dagger', 'burning_strike', 'lucky_strike', 'healing_strike', 'psycholeak', 'divine_blessing', 'hardening',
   }
 
-  steam.userStats.requestCurrentStats()
+  -- steam.userStats.requestCurrentStats()  -- 注释掉 steam 验证
   new_game_plus = state.new_game_plus or 0
   if not state.new_game_plus then state.new_game_plus = new_game_plus end
   current_new_game_plus = state.current_new_game_plus or new_game_plus
@@ -2095,7 +2095,7 @@ function open_options(self)
 
     self.quit_button = Button{group = self.ui, x = gw/2, y = gh - 25, force_update = true, button_text = 'quit', fg_color = 'bg10', bg_color = 'bg', action = function()
       system.save_state()
-      steam.shutdown()
+      -- steam.shutdown()  -- 注释掉 steam 验证
       love.event.quit()
     end}
   end, 'pause')

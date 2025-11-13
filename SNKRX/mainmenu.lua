@@ -11,8 +11,8 @@ function MainMenu:on_enter(from)
   slow_amount = 1
   trigger:tween(2, main_song_instance, {volume = 0.5, pitch = 1}, math.linear)
 
-  steam.friends.setRichPresence('steam_display', '#StatusFull')
-  steam.friends.setRichPresence('text', 'Main Menu')
+  -- steam.friends.setRichPresence('steam_display', '#StatusFull')  -- 注释掉 steam 验证
+  -- steam.friends.setRichPresence('text', 'Main Menu')  -- 注释掉 steam 验证
 
   self.floor = Group()
   self.main = Group():set_as_physics_world(32, 0, 0, {'player', 'enemy', 'projectile', 'enemy_projectile', 'force_field', 'ghost'})
@@ -118,7 +118,7 @@ function MainMenu:on_enter(from)
   end}
   self.quit_button = Button{group = self.main_ui, x = 37, y = gh/2 + 34, force_update = true, button_text = 'quit', fg_color = 'bg10', bg_color = 'bg', action = function(b)
     system.save_state()
-    steam.shutdown()
+    -- steam.shutdown()  -- 注释掉 steam 验证
     love.event.quit()
   end}
   self.t:every(2, function() self.soundtrack_button.spring:pull(0.025, 200, 10) end)

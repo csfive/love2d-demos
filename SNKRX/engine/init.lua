@@ -46,7 +46,7 @@ end
 function engine_run(config)
   if not web then
     love.filesystem.setIdentity(config.game_name)
-    steam.init()
+    -- steam.init()  -- 注释掉 steam 验证
     system.load_state()
 
     local _, _, flags = love.window.getMode()
@@ -122,7 +122,7 @@ function engine_run(config)
         if name == "quit" then
           if not love.quit or not love.quit() then
             system.save_state()
-            steam.shutdown()
+            -- steam.shutdown()  -- 注释掉 steam 验证
             return a or 0
           end
         elseif name == "focus" then
@@ -146,7 +146,7 @@ function engine_run(config)
 
     if love.timer then dt = love.timer.step() end
 
-    steam.runCallbacks()
+    -- steam.runCallbacks()  -- 注释掉 steam 验证
     accumulator = accumulator + dt
     while accumulator >= fixed_dt do
       frame = frame + 1
